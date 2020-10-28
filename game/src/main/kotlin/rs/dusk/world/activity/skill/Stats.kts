@@ -3,7 +3,9 @@ package rs.dusk.world.activity.skill
 import rs.dusk.engine.client.ui.event.InterfaceOpened
 import rs.dusk.engine.client.ui.open
 import rs.dusk.engine.client.variable.*
+import rs.dusk.engine.entity.character.get
 import rs.dusk.engine.entity.character.player.skill.Skill.*
+import rs.dusk.engine.entity.character.set
 import rs.dusk.engine.event.then
 import rs.dusk.engine.event.where
 import rs.dusk.world.interact.entity.player.display.InterfaceOption
@@ -36,13 +38,13 @@ InterfaceOption where { name == "stats" && option == "View" } then {
         player.removeVar("skill_stat_flash", skill)
     } else {
         player.setVar("skill_guide", menuIndex)
+        player["active_skill_guide"] = menuIndex
         player.open("skill_guide")
     }
 }
 
 InterfaceOption where { name == "skill_guide" && option == "Open subsection" } then {
     val index = componentId - 10
-    val guide = player.getVar("skill_guide", 0)
-    val menuIndex = guide
+    val menuIndex = player["active_skill_guide", 1]
     player.setVar("skill_guide", menuIndex + index * 1024)
 }
