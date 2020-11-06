@@ -12,6 +12,7 @@ enum class ChatType(val id: Int) {
     FriendsChat(7),
     FriendsChatGame(8),
     QuickChat(9),
+    FriendsChatMessage(11),
     Console(99),
     Trade(100),
     GameTrade(103),
