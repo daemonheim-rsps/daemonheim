@@ -21,6 +21,11 @@ interface PooledMapList<T : Character> : EntityList<T> {
     val count: Int
         get() = indexed.count { it != null }
 
+    val all: List<T>
+        get() = indexed.filterNotNull().toList()
+
+    fun all(predicate: (T?) -> Boolean) = indexed.all(predicate)
+
     fun add(entity: T) {
         add(entity.tile, entity)
         add(entity.tile.chunk, entity)
