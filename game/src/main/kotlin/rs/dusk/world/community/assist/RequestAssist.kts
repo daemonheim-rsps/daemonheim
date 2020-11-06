@@ -13,6 +13,7 @@ import rs.dusk.engine.entity.character.player.delay.Delay
 import rs.dusk.engine.entity.character.player.delay.delayed
 import rs.dusk.engine.entity.character.player.delay.remaining
 import rs.dusk.engine.entity.character.player.skill.Skill
+import rs.dusk.engine.entity.character.player.social.hasFriend
 import rs.dusk.engine.entity.character.remove
 import rs.dusk.engine.entity.character.set
 import rs.dusk.engine.entity.character.update.visual.player.name
@@ -31,7 +32,6 @@ import rs.dusk.world.community.assist.Assistance.maximumExperience
 import rs.dusk.world.community.assist.Assistance.redirectSkillExperience
 import rs.dusk.world.community.assist.Assistance.stopRedirectingSkillExp
 import rs.dusk.world.community.assist.Assistance.toggleInventory
-import rs.dusk.world.community.friend.hasFriend
 import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
