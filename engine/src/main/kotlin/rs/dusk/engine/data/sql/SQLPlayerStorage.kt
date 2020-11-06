@@ -8,6 +8,9 @@ import org.jetbrains.exposed.sql.update
 import org.koin.dsl.module
 import rs.dusk.engine.data.StorageStrategy
 import rs.dusk.engine.entity.character.player.Player
+import rs.dusk.engine.entity.character.player.PlayerDetails
+import rs.dusk.engine.entity.character.player.social.Names
+import rs.dusk.engine.entity.character.player.social.RelationshipManager
 import rs.dusk.engine.map.Tile
 import rs.dusk.utility.DetailsTable
 import rs.dusk.utility.PlayersTable
@@ -37,7 +40,12 @@ class SQLPlayerStorage(url: String, user: String, password: String) : StorageStr
                 val y = player[PlayersTable.y]
                 val plane = player[PlayersTable.plane]
                 val tile = Tile(x, y, plane)
-                Player(id = playerId, tile = tile)
+                val names = Names(name)
+                Player(id = playerId, tile = tile,
+                    details = PlayerDetails(names, 2),
+                    names = names,
+                    relations = RelationshipManager().create(names)
+                )
             }
         }
     }
