@@ -4,11 +4,11 @@ import rs.dusk.core.network.codec.packet.access.PacketWriter
 import rs.dusk.core.network.model.packet.PacketType
 import rs.dusk.network.rs.codec.game.GameMessageEncoder
 import rs.dusk.network.rs.codec.game.GameOpcodes.FRIEND_LIST_APPEND
-import rs.dusk.network.rs.codec.game.encode.message.FriendsChatListAppend
+import rs.dusk.network.rs.codec.game.encode.message.FriendsChatListAppendMessage
 
-class FriendsChatListAppendEncoder : GameMessageEncoder<FriendsChatListAppend>() {
+class FriendsChatListAppendEncoder : GameMessageEncoder<FriendsChatListAppendMessage>() {
 
-    override fun encode(builder: PacketWriter, message: FriendsChatListAppend) {
+    override fun encode(builder: PacketWriter, message: FriendsChatListAppendMessage) {
         val (worldId, username, displayName, rank) = message
         builder.apply {
             writeOpcode(FRIEND_LIST_APPEND, PacketType.BYTE)
