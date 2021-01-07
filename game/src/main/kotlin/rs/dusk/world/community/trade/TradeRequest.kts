@@ -16,7 +16,6 @@ import rs.dusk.engine.entity.character.get
 import rs.dusk.engine.entity.character.player.Player
 import rs.dusk.engine.entity.character.player.PlayerOption
 import rs.dusk.engine.entity.character.player.chat.ChatType
-import rs.dusk.engine.entity.character.player.chat.message
 import rs.dusk.engine.entity.character.player.social.hasFriend
 import rs.dusk.engine.entity.character.set
 import rs.dusk.engine.entity.character.update.visual.player.name

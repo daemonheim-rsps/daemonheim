@@ -14,9 +14,7 @@ import rs.dusk.engine.entity.character.player.delay.Delays
 import rs.dusk.engine.entity.character.player.req.Requests
 import rs.dusk.engine.entity.character.player.skill.Experience
 import rs.dusk.engine.entity.character.player.skill.Levels
-import rs.dusk.engine.entity.character.player.social.FriendsChat
-import rs.dusk.engine.entity.character.player.social.Name
-import rs.dusk.engine.entity.character.player.social.Relations
+import rs.dusk.engine.entity.character.player.social.*
 import rs.dusk.engine.entity.character.update.LocalChange
 import rs.dusk.engine.entity.character.update.Visuals
 import rs.dusk.engine.entity.character.update.visual.player.appearance
@@ -33,8 +31,8 @@ class Player(
     @Transient override var index: Int = -1,
     override var id: Int = -1,
     override var tile: Tile = Tile.EMPTY,
-    @Transient val details: PlayerDetails,
-    val names: Name,
+    val names: Name = Names(""),
+    @Transient val details: PlayerDetails = PlayerDetails(names),
     @Transient override var size: Size = Size.TILE,
     @Transient val viewport: Viewport = Viewport(),
     @Transient override val visuals: Visuals = Visuals(),
@@ -47,7 +45,7 @@ class Player(
     @Transient val dialogues: Dialogues = Dialogues(),
     val experience: Experience = Experience(),
     val levels: Levels = Levels(experience),
-    val relations: Relations,
+    val relations: Relations = Relationships(),
     var channel: FriendsChat? = null,
     var friendsChat: Name? = null
 ) : Character {

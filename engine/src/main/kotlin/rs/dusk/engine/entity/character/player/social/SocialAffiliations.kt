@@ -4,7 +4,7 @@ import rs.dusk.engine.entity.character.get
 import rs.dusk.engine.entity.character.player.Player
 import rs.dusk.engine.entity.character.player.Players
 import rs.dusk.engine.entity.character.player.chat.ChatFilterStatus
-import rs.dusk.engine.entity.character.player.chat.message
+import rs.dusk.network.codec.game.encode.message
 
 class SocialAffiliations(private val players: Players) : Affiliate {
 

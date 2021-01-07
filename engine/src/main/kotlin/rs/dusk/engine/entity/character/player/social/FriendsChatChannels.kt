@@ -4,9 +4,9 @@ import org.slf4j.LoggerFactory
 import rs.dusk.engine.entity.character.player.Player
 import rs.dusk.engine.entity.character.player.Players
 import rs.dusk.engine.entity.character.player.chat.ChatType
-import rs.dusk.engine.entity.character.player.chat.message
 import rs.dusk.engine.entity.character.player.social.Duration.HOUR
 import rs.dusk.engine.entity.character.player.social.Duration.MINUTE
+import rs.dusk.network.codec.game.encode.message
 import rs.dusk.utility.func.formatUsername
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit

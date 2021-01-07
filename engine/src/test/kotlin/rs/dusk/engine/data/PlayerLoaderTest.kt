@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.koin.dsl.module
 import rs.dusk.engine.entity.character.player.Player
+import rs.dusk.engine.entity.character.player.social.socialModule
 import rs.dusk.engine.event.eventModule
 import rs.dusk.engine.map.collision.collisionModule
 import rs.dusk.engine.path.strat.FollowTargetStrategy
@@ -21,7 +22,7 @@ import rs.dusk.network.codec.game.encode.ContextMenuOptionEncoder
  */
 internal class PlayerLoaderTest : KoinMock() {
 
-    override val modules = listOf(eventModule, collisionModule, module { single { mockk<ContextMenuOptionEncoder>(relaxed = true) } })
+    override val modules = listOf(eventModule, collisionModule, module { single { mockk<ContextMenuOptionEncoder>(relaxed = true) } }, socialModule)
 
 
     @Test

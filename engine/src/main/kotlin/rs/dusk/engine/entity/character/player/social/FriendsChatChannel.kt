@@ -2,24 +2,18 @@ package rs.dusk.engine.entity.character.player.social
 
 import org.slf4j.LoggerFactory
 import rs.dusk.cache.secure.Huffman
-import rs.dusk.core.network.codec.packet.access.PacketWriter
 import rs.dusk.engine.client.Sessions
-import rs.dusk.engine.client.send
 import rs.dusk.engine.entity.character.get
 import rs.dusk.engine.entity.character.player.Player
 import rs.dusk.engine.entity.character.player.Players
 import rs.dusk.engine.entity.character.player.chat.ChatFilterStatus
 import rs.dusk.engine.entity.character.player.chat.ChatType
-import rs.dusk.engine.entity.character.player.chat.message
 import rs.dusk.engine.entity.character.player.social.Duration.HOUR
-import rs.dusk.utility.func.formatUsername
-import rs.dusk.utility.func.toRSLong
-import rs.dusk.utility.inject
 import rs.dusk.engine.entity.character.player.social.FriendsChatChannels.Companion.CHANNEL_SETTINGS_DELAY
-import rs.dusk.network.rs.codec.game.encode.message.*
-
+import rs.dusk.network.codec.game.encode.message
+import rs.dusk.utility.func.formatUsername
+import rs.dusk.utility.inject
 import java.util.*
-import kotlin.random.Random
 
 class FriendsChatChannel(private val players: Players, override val relations: Relations) : FriendsChat {
 
@@ -90,8 +84,8 @@ class FriendsChatChannel(private val players: Players, override val relations: R
     }
 
     override fun display(player: Player) {
-        val members = members.map { FriendsChatUpdate.Friend(it.names.name, it.names.username, 1, getRank(it).value) }
-        player.send(FriendsChatUpdate(owner?.name, channelName!!.toRSLong(), kickRank.value, members.size, members))
+//        val members = members.map { FriendsChatUpdate.Friend(it.names.name, it.names.username, 1, getRank(it).value) } FIXME
+//        player.send(FriendsChatUpdate(owner?.name, channelName!!.toRSLong(), kickRank.value, members.size, members))
         //Notify
         player.message("Now talking in friends chat channel $channelName", ChatType.FriendsChatMessage)
         player.message("To talk, start each line of chat with the / symbol.", ChatType.FriendsChatMessage)
@@ -107,13 +101,13 @@ class FriendsChatChannel(private val players: Players, override val relations: R
         }
 
         //Build the reusable packet
-        val builder = buildPacket(player)
-        huffman.compress(message, builder)
-        val data = builder.buffer.array().copyOf(builder.buffer.readableBytes())
+//        val builder = buildPacket(player) FIXME
+//        huffman.compress(message, builder)
+//        val data = builder.buffer.array().copyOf(builder.buffer.readableBytes())
 
         //Send message to all members (who aren't ignoring this player)
         members.filterNot { it.ignores(player) }.forEach {
-            it.send(FriendsChatMessage(data))
+//            it.send(FriendsChatMessage(data)) FIXME
         }
     }
 
@@ -125,16 +119,16 @@ class FriendsChatChannel(private val players: Players, override val relations: R
         }
 
         //Build the reusable packet
-        val builder = buildPacket(player)
-        builder.writeShort(fileId)
-        if(data != null)
-            builder.writeBytes(data)
-
-        val array = builder.buffer.array().copyOf(builder.buffer.readableBytes())
+//        val builder = buildPacket(player) FIXME
+//        builder.writeShort(fileId)
+//        if(data != null)
+//            builder.writeBytes(data)
+//
+//        val array = builder.buffer.array().copyOf(builder.buffer.readableBytes())
 
         //Send message to all members (who aren't ignoring this player)
         members.filterNot { it.ignores(player) }.forEach {
-            it.send(FriendsChatQuickChatMessage(array))
+//            it.send(FriendsChatQuickChatMessage(array)) FIXME
         }
     }
 
@@ -143,7 +137,7 @@ class FriendsChatChannel(private val players: Players, override val relations: R
      * @param player The player sending the message
      * @return Half built packet builder
      */
-    private fun buildPacket(player: Player): PacketWriter {
+    /*private fun buildPacket(player: Player): PacketWriter {
         val builder = PacketWriter()
         with(builder)
         {
@@ -172,7 +166,7 @@ class FriendsChatChannel(private val players: Players, override val relations: R
 
         }
         return builder
-    }
+    }*/
 
     override fun kick(player: Player, target: Name, ban: Boolean) {
         //Check player has the rank to kick
@@ -308,7 +302,8 @@ class FriendsChatChannel(private val players: Players, override val relations: R
 
     override fun updateMember(member: Player, rank: FriendsChat.Ranks) {
         members.forEach {
-            it.send(FriendsChatListAppendMessage(1, member.names.username, member.names.name, rank.value))
+            // FIXME
+//            it.send(FriendsChatListAppendMessage(1, member.names.username, member.names.name, rank.value))
         }
     }
 
@@ -456,7 +451,8 @@ class FriendsChatChannel(private val players: Players, override val relations: R
         if (queue.any { it == null }) {
             //Update all details
             members.forEach {
-                it.send(FriendsChatUpdate(owner?.name, channelName!!.toRSLong(), kickRank.value, 0/*members.size*/))
+                // FIXME
+//                it.send(FriendsChatUpdate(owner?.name, channelName!!.toRSLong(), kickRank.value, 0/*members.size*/))
             }
         } else {
             //Update single changes
@@ -486,12 +482,13 @@ fun Player.statusOnline(friend: Name): Boolean
 
 fun Player.sendFriend(name: Name, friend: Player?)
 {
-    send(if (friend == null || !friend.statusOnline(this.details.name)) {
-        FriendListUpdateMessage(0, name.name, name.previousName, false, channel?.getRank(name)?.value ?: 0, false)//Display offline
-    } else {
-        //Note: Having lobby as world as 1 will have it appear as green but stop the continuous login-in messages
-        FriendListUpdateMessage(1, name.name, name.previousName, false, channel?.getRank(friend)?.value ?: 0, false)//Display online
-    })
+    // FIXME
+//    send(if (friend == null || !friend.statusOnline(this.details.name)) {
+//        FriendListUpdateMessage(0, name.name, name.previousName, false, channel?.getRank(name)?.value ?: 0, false)//Display offline
+//    } else {
+//        //Note: Having lobby as world as 1 will have it appear as green but stop the continuous login-in messages
+//        FriendListUpdateMessage(1, name.name, name.previousName, false, channel?.getRank(friend)?.value ?: 0, false)//Display online
+//    })
 }
 
 fun Player.sendFriends(players: Players)
