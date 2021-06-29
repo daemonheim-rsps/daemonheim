@@ -23,38 +23,44 @@ data class CombatTargetStrategy(
         get() = target.size
 
     override fun reached(currentX: Int, currentY: Int, plane: Int, size: Size): Boolean {
-        return isWithinAttackDistance(currentX, currentY, plane, target, attackDistance, closeCombat)
+        return isWithinAttackDistance(currentX, currentY, plane, size, target, attackDistance, closeCombat)
     }
 
     companion object {
+        fun isWithinAttackDistance(source: Character, target: Character, attackDistance: Int, walls: Boolean): Boolean {
+            return isWithinAttackDistance(source.tile.x, source.tile.y, source.tile.plane, source.size, target, attackDistance, walls)
+        }
         /**
          * @param walls ranged, magic or halberds
          */
-        fun isWithinAttackDistance(x: Int, y: Int, plane: Int, target: Character, attackDistance: Int, walls: Boolean): Boolean {
+        fun isWithinAttackDistance(x: Int, y: Int, plane: Int, size: Size, target: Character, attackDistance: Int, walls: Boolean): Boolean {
             // under
-            if (x >= target.tile.x && x < target.tile.x + target.size.width && y >= target.tile.y && y < target.tile.y + target.size.height) {
+            if (((x >= target.tile.x && x < target.tile.x + target.size.width) || (x + size.width > target.tile.x && x + size.width < target.tile.x + target.size.width)) &&
+                ((y >= target.tile.y && y < target.tile.y + target.size.height) || (y + size.height > target.tile.y && x + size.height < target.tile.y + target.size.height))) {
                 return false
             }
             val targetX = getNearest(target.tile.x, target.size.width, x)
             val targetY = getNearest(target.tile.y, target.size.height, y)
-            if (Distance.chebyshev(x, y, targetX, targetY) > attackDistance) {
+            val sourceX = getNearest(x, size.width, targetX)
+            val sourceY = getNearest(y, size.height, targetY)
+            if (Distance.chebyshev(sourceX, sourceY, targetX, targetY) > attackDistance) {
                 return false
             }
-            if (!get<BresenhamsLine>().withinSight(x, y, plane, targetX, targetY, target.tile.plane, walls)) {
+            if (!get<BresenhamsLine>().withinSight(sourceX, sourceY, plane, targetX, targetY, target.tile.plane, walls)) {
                 return false
             }
             // diagonal
             if (attackDistance <= 1) {
-                if (x > target.tile.x && y > target.tile.y) {// ne
+                if (x >= target.tile.x + target.size.width && y >= target.tile.y + target.size.height) {// ne
                     return false
                 }
-                if (x < target.tile.x && y > target.tile.y) {// nw
+                if (x + size.width <= target.tile.x && y >= target.tile.y + target.size.height) {// nw
                     return false
                 }
-                if (x > target.tile.x && y < target.tile.y) {// se
+                if (x >= target.tile.x + target.size.width && y + size.height <= target.tile.y) {// se
                     return false
                 }
-                if (x < target.tile.x && y < target.tile.y) {// sw
+                if (x + size.width <= target.tile.x && y + size.height <= target.tile.y) {// sw
                     return false
                 }
             }

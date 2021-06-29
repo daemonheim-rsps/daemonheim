@@ -9,6 +9,7 @@ import kotlin.math.min
 class WorldMap(private val view: MapView) {
 
     val regions = RegionLoader(view)
+    private val chunks = false
 
     private var minRegionX = 0
     private var minRegionY = 0
@@ -52,11 +53,13 @@ class WorldMap(private val view: MapView) {
                 g.drawImage(region, viewX, viewY, view.regionToImageX(1), view.regionToImageY(1), null)
 
                 // Chunks
-//                g.color = Color.ORANGE
-//                for (i in 0..64 step 8) {
-//                    g.drawLine(viewX + view.mapToImageX(i), viewY, viewX + view.mapToImageX(i), view.mapToViewY(mapY + 64))
-//                    g.drawLine(viewX, viewY + view.mapToImageY(i), viewX + view.mapToImageX(64), viewY + view.mapToImageY(i))
-//                }
+                if (chunks) {
+                    g.color = Color.ORANGE
+                    for (i in 0..64 step 8) {
+                        g.drawLine(viewX + view.mapToImageX(i), viewY, viewX + view.mapToImageX(i), view.mapToViewY(mapY + 64))
+                        g.drawLine(viewX, viewY + view.mapToImageY(i), viewX + view.mapToImageX(64), viewY + view.mapToImageY(i))
+                    }
+                }
                 // Regions
                 g.color = Color.MAGENTA
                 g.drawLine(viewX, viewY, viewX, view.mapToViewY(mapY + 64))
