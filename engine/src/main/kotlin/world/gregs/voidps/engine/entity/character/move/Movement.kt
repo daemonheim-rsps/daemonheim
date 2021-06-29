@@ -77,15 +77,19 @@ fun Player.cantReach(strategy: TileTargetStrategy): Boolean {
     return movement.result is PathResult.Failure || (movement.result is PathResult.Partial && !strategy.reached(tile, size))
 }
 
-suspend fun Player.walkTo(target: Any, watch: Character? = null, action: () -> Unit) {
-    walkTo(getStrategy(target), watch, action)
+fun Character.walkTo(target: Any, watch: Character? = null, cancelAction: Boolean = true, action: (() -> Unit)? = null) {
+    walkTo(getStrategy(target), watch, cancelAction, action)
 }
 
-suspend fun Player.walkTo(strategy: TileTargetStrategy, watch: Character? = null, action: () -> Unit) {
-    delay {
-        this@walkTo.action.cancelAndJoin()
+fun Character.walkTo(strategy: TileTargetStrategy, watch: Character? = null, cancelAction: Boolean = true, action: (() -> Unit)? = null) {
+    delay(this) {
+        if (cancelAction) {
+            this@walkTo.action.cancelAndJoin()
+        }
         watch(watch)
-        dialogues.clear()
+        if (this is Player) {
+            dialogues.clear()
+        }
         movement.set(strategy, action)
     }
 }

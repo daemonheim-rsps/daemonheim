@@ -1022,11 +1022,13 @@ bow_shoot:
 crossbow_shoot:
   id: 4230
 cow_hit:
-  id: 150
+  id: 5850
 cow_death:
-  id: 244
+  id: 5851
 cow_attack:
-  id: 245
+  id: 5849
+cow_eat_grass:
+  id: 5854
 calf_hit:
   id: 150
 calf_death:

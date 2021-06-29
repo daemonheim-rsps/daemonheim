@@ -8,7 +8,6 @@ rat:
   str: 1
   def: 1
   mage: 1
-  speed: 4
   range: 1
   dstab: -42
   attbns: -47
@@ -17,6 +16,9 @@ rat:
   dcrush: -42
   dmagic: -42
   drange: -42
+  attack_speed: 4
+  wander_radius: 8
+  attack_radius: 8
   hitpoints: 20
   poisonous: false
   immune_poison: false
@@ -30,7 +32,6 @@ cow:
   att: 1
   str: 1
   mage: 1
-  speed: 4
   range: 1
   dstab: -21
   attbns: -15
@@ -39,6 +40,9 @@ cow:
   dcrush: -21
   dmagic: -21
   drange: -21
+  attack_speed: 4
+  wander_radius: 12
+  attack_radius: 8
   hitpoints: 80
   poisonous: false
   immune_poison: true
@@ -53,7 +57,6 @@ chicken:
   str: 1
   def: 1
   mage: 1
-  speed: 4
   range: 1
   dstab: -42
   attbns: -47
@@ -63,6 +66,9 @@ chicken:
   dmagic: -42
   drange: -42
   height: 15
+  attack_speed: 4
+  wander_radius: 8
+  attack_radius: 6
   hitpoints: 30
   poisonous: false
   immune_poison: false
@@ -82,7 +88,6 @@ cow_calf:
   str: 1
   def: 1
   mage: 1
-  speed: 4
   range: 1
   dstab: -26
   attbns: -20
@@ -91,6 +96,9 @@ cow_calf:
   dcrush: -26
   dmagic: -26
   drange: -26
+  attack_speed: 4
+  wander_radius: 10
+  attack_radius: 8
   hitpoints: 60
   poisonous: false
   immune_poison: false
@@ -106,7 +114,6 @@ goblin_mohawk_blue:
   def: 1
   mage: 1
   range: 1
-  speed: 4
   dstab: -15
   attbns: -21
   strbns: -15
@@ -114,6 +121,9 @@ goblin_mohawk_blue:
   dcrush: -15
   dmagic: -15
   drange: -15
+  attack_speed: 4
+  attack_radius: 8
+  wander_radius: 10
   hitpoints: 50
   poisonous: false
   immune_poison: false
@@ -156,7 +166,6 @@ giant_spider:
   str: 1
   def: 1
   mage: 1
-  speed: 4
   range: 1
   dstab: -10
   attbns: -10
@@ -165,6 +174,9 @@ giant_spider:
   dcrush: -10
   dmagic: -10
   drange: -10
+  attack_speed: 4
+  attack_radius: 8
+  wander_radius: 10
   hitpoints: 50
   poisonous: false
   aggressive: true

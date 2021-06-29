@@ -49,6 +49,7 @@ fun getTickStages(
     // Tick
     GameTick(scheduler),
     PlayerPathTask(players, pathFinder),
+    NPCPathTask(npcs, pathFinder),
     PlayerMovementCallbackTask(players),
     PlayerMovementTask(players, collisions),
     NPCMovementTask(npcs, collisions),

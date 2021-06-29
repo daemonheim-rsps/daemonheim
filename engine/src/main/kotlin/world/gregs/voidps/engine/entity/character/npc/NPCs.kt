@@ -60,6 +60,7 @@ data class NPCs(
             return null
         }
         val npc = NPC(def.id, tile, getSize(def))
+        npc["spawn_tile"] = tile
         store.populate(npc)
         npc.movement.traversal = getTraversal(def)
         val dir = if (direction == Direction.NONE) Direction.all.random() else direction

@@ -1,6 +1,7 @@
 package world.gregs.voidps.engine.client.update.task.npc
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Runnable
+import world.gregs.voidps.engine.entity.character.MoveStop
 import world.gregs.voidps.engine.entity.character.Moved
 import world.gregs.voidps.engine.entity.character.move.running
 import world.gregs.voidps.engine.entity.character.npc.NPC
@@ -18,7 +19,7 @@ class NPCMovementTask(
     private val collisions: Collisions
 ) : Runnable {
 
-    override fun run() = runBlocking {
+    override fun run() {
         npcs.forEach { npc ->
             if (!npc.movement.frozen) {
                 step(npc)
@@ -37,6 +38,7 @@ class NPCMovementTask(
         if (movement.moving) {
             var step = steps.poll()
             if (!movement.traversal.blocked(npc.tile, step)) {
+                movement.previousTile = npc.tile
                 movement.walkStep = step
                 movement.delta = step.delta
                 npc.turn(step, false)
@@ -46,6 +48,7 @@ class NPCMovementTask(
                         val tile = npc.tile.add(step.delta)
                         step = steps.poll()
                         if (!movement.traversal.blocked(tile, step)) {
+                            movement.previousTile = tile
                             movement.runStep = step
                             movement.delta = movement.delta.add(step.delta)
                             npc.turn(step, false)
@@ -56,6 +59,9 @@ class NPCMovementTask(
                     }
                 }
             }
+            if (steps.isEmpty()) {
+                npc.events.emit(MoveStop)
+            }
         }
     }
 
@@ -64,6 +70,7 @@ class NPCMovementTask(
      */
     fun move(npc: NPC) {
         val movement = npc.movement
+        movement.trailingTile = npc.tile
         if (movement.delta != Delta.EMPTY) {
             val from = npc.tile
             npc.tile = npc.tile.add(movement.delta)
